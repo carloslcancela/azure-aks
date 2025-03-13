@@ -7,9 +7,11 @@ spec:
   - name: nginx
     image: nginx
   affinity:
-    podAffinity:
+    nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchLabels:
-            imagem: liberada
-        topologyKey: kubernetes.io/hostname
+        nodeSelectorTerms: 
+        - matchExpressions:
+          - key: imagem
+            operator: In
+            values: 
+            - liberada
