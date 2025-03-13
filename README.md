@@ -20,6 +20,7 @@ export KUBECONFIG=./azurek8s
 Destroy resources
 
 terraform plan -destroy -out main.destroy.tfplan
+
 terraform apply main.destroy.tfplan
 
 Reference: https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-terraform?pivots=development-environment-azure-cli
