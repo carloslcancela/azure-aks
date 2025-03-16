@@ -39,6 +39,8 @@ Destroy resources
 
 ```bash
 terraform plan -destroy -out main.destroy.tfplan
+```
+```bash
 terraform apply main.destroy.tfplan
 ```
 
