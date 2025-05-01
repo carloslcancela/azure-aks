@@ -32,7 +32,7 @@ echo "$(terraform output kube_config)" > ./azurek8s
 Set an environment variable so kubectl can pick up the correct config using the following command.
 
 ```bash
-export KUBECONFIG=./azurek8s
+export KUBECONFIG=/c/Users/XXX/OneDrive/Dev/AKS/azurek8s
 ```
 Remember: Remove the EOT and EOF of the file
 
