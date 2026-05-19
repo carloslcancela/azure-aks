@@ -22,15 +22,29 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = random_pet.azurerm_kubernetes_cluster_dns_prefix.id
 
+  sku_tier = "Free"
+
   identity {
     type = "SystemAssigned"
   }
 
   default_node_pool {
-    name       = "agentpool"
-    vm_size    = "Standard_D2_v2"
-    node_count = var.node_count
+    name = "agentpool"
+
+    # VM bem mais barata
+    vm_size = "Standard_B2s"
+
+    # Apenas 1 node para laboratório
+    node_count = 1
+
+    # Disco mais barato
+    os_disk_type    = "Managed"
+    os_disk_size_gb = 30
+
+    # Opcional
+    enable_auto_scaling = false
   }
+
   linux_profile {
     admin_username = var.username
 
@@ -38,8 +52,20 @@ resource "azurerm_kubernetes_cluster" "k8s" {
       key_data = azapi_resource_action.ssh_public_key_gen.output.publicKey
     }
   }
+
   network_profile {
-    network_plugin    = "kubenet"
+
+    # Mais moderno e econômico
+    network_plugin = "azure"
+    network_plugin_mode = "overlay"
+
+    # Mantém compatibilidade
     load_balancer_sku = "standard"
+  }
+
+  tags = {
+    environment = "lab"
+    owner       = "carlos"
+    cost        = "low"
   }
 }
